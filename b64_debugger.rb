@@ -61,7 +61,7 @@ def bit_str_to_utf8(bit_str)
     .force_encoding('UTF-8')
 end
 
-utf8_in = gets.encode('UTF-8').chomp
+utf8_in = STDIN.read
 bit_str8 = utf8_to_bit_str(utf8_in)
 b64 = bit_str_to_b64(bit_str8)
 bit_str6 = b64_to_bit_str(b64)
