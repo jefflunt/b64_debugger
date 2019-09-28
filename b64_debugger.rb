@@ -2,7 +2,7 @@ CONVERTER = [
   ('A'..'Z').to_a,
   ('a'..'z').to_a,
   (0..9).to_a.map{|i| i.to_s},
-  '+', '/'
+  '+', '/', '='
 ].flatten
 
 def abs_format(bit_str)
@@ -25,10 +25,13 @@ def ascii_to_bit_str(ascii)
 end
 
 def bit_str_to_b64(bit_str)
-  bit_str
+  non_padded = bit_str
     .scan(/.{1,6}/m)
-    .map{|bits| CONVERTER[bits.to_i(2)] }
+    .map{|bits| CONVERTER[bits.ljust(6, '0').to_i(2)] }
     .join
+
+  padded_length = (non_padded.length / 4.0).ceil * 4
+  non_padded.ljust(padded_length, '=')
 end
 
 def b64_to_bit_str(b64)
